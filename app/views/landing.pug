@@ -9,12 +9,12 @@ form(method='Post')
   input#gradeInput.input(type='text' name='percentgrade' placeholder='Grade')
   button(type='submit') Submit
 #gradeDisplay
-  h1 Display
+  h1 Grades
   ul
       for s in students
                 li
-                span=s.name
-                span=s.percentgrade
-                span=s.lettergrade
-                a(href=`/update/${s.id}`) Update
-                a(href=`/delete/${s.id}`) Delete
+                  span=s.name
+                  span=s.percentgrade+'%'
+                  span=s.lettergrade
+                  a(href=`/update/${s.id}`).button Update
+                  a(href=`/delete/${s.id}`).button Delete
