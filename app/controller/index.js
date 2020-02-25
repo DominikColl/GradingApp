@@ -6,13 +6,22 @@ exports.landing = async (req, res) => {
 exports.createProduct = async (req, res) => {
     console.log(req.body)
     let { name, percentgrade } = req.body;
-    percentgrade = parseFloat(percentgrade)
-    let lettergrade = letterGrade(percentgrade)
-    // function for letter grade
-    await Student.create({ name, percentgrade, lettergrade })
-    const students = await Student.findAll();
-    res.render('landing', { students })
-
+    // console.log(name.length)
+    if (name.length > 0 && percentgrade.length > 0) {
+        // console.log('is tjis nfwenfo')
+        percentgrade = parseFloat(percentgrade)
+        if (typeof percentgrade == 'number') {
+            let lettergrade = letterGrade(percentgrade)
+            // function for letter grade
+            await Student.create({ name, percentgrade, lettergrade })
+            const students = await Student.findAll();
+            res.render('landing', { students })
+        } else {
+            res.redirect('/error')
+        }
+    } else {
+        res.redirect('/error')
+    }
     // const products = await Products.findAll();
     // res.render('overview', { products })
 }
@@ -27,17 +36,34 @@ exports.findAllRenderAll = async (req, res) => {
     console.log(students)
     res.render('landing', { students })
 }
+exports.error = (req, res) => {
+    res.render('errorform')
+}
+exports.updateError = (req, res) => {
+    res.render('errorform')
+}
 exports.updateStudent = async (req, res) => {
     let { name, percentgrade } = req.body;
-    percentgrade = parseFloat(percentgrade)
-    let lettergrade = letterGrade(percentgrade);
-    const { id } = req.params;
-    console.log(name + percentgrade + lettergrade)
-    console.log(id)
-    // needed where param
-    await Student.update({ name, percentgrade, lettergrade }, { where: { id: id } })
-    res.redirect('/')
-    // res.json(updatedEntry)
+    if (name.length > 0 && percentgrade.length > 0) {
+        percentgrade = parseFloat(percentgrade)
+        // console.log(typeof percentgrade)
+        if (typeof percentgrade === 'number') {
+            let lettergrade = letterGrade(percentgrade);
+            const { id } = req.params;
+            console.log(name + percentgrade + lettergrade)
+            console.log(id)
+            // needed where param
+            await Student.update({ name, percentgrade, lettergrade }, { where: { id: id } })
+            res.redirect('/')
+        } else {
+            const { id } = req.params;
+            res.redirect(`/error/${id}`)
+        }
+    } else {
+        const { id } = req.params;
+        res.redirect(`/error/${id}`)
+    }
+    // res.json(updatxedEntry)
 }
 exports.deleteStudent = async (req, res) => {
     const { id } = req.params;

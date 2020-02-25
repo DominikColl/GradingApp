@@ -5,4 +5,8 @@ router.post('/', controller.createProduct)
 router.get('/delete/:id', controller.deleteStudent)
 router.get('/update/:id', controller.renderUpdateForm)
 router.post('/update/:id', controller.updateStudent)
+router.get('/error/:id', controller.updateError)
+router.post('/error/:id', controller.updateStudent)
+router.get('/error', controller.error)
+router.post('/error', controller.createProduct)
 module.exports = router;
