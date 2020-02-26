@@ -26,8 +26,6 @@ exports.createProduct = async (req, res) => {
     } else {
         res.redirect('/error')
     }
-    // const products = await Products.findAll();
-    // res.render('overview', { products })
 }
 // render update form
 exports.renderUpdateForm = async (req, res) => {

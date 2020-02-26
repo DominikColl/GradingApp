@@ -13,6 +13,7 @@ form(method='Post')
   ul
       for s in students
                 li
+                  span=s.id
                   span=s.name
                   span=s.percentgrade+'%'
                   span=s.lettergrade
